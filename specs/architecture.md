@@ -59,3 +59,14 @@ A local Ollama instance running a lightweight model:
 | `0` | **Approved** | Clean exit. No output necessary, or optional positive stdout. | The IDE's primary agent proceeds to the next turn or tool call. |
 | `2` | **Rejected** | Code validation failed. LLM validation JSON is piped directly to `stderr`. | The IDE intercepts the exit code and displays the stderr content back to the primary agent as a tool error. The agent corrects its mistake. |
 | `Other (1, 127, etc.)` | **Hook Error** | Hook execution/network failure. Logs error to stderr. | Depending on configuration, this can either block or fail gracefully, though default setup should fail safely to avoid stalling development. |
+
+---
+
+## 4. Token & Cost Optimization Design
+
+A primary design driver for Nano-Guard is reducing cloud API costs and keeping the main agent's context window clean:
+
+* **Zero-Cost Gatekeeping**: Evaluations run on local hardware via Ollama, resulting in $0.00 API cost for verification steps.
+* **Context Preservation**:
+  * **Success Path**: On success, the hook silently exits. No new tokens are added to the primary cloud agent's context.
+  * **Failure Path**: Instead of raw logs, the cloud agent receives a highly structured, dense JSON feedback block (typically <150 tokens) explaining exactly what to fix. This prevents multi-turn guessing and context bloat.
