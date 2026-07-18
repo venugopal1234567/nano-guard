@@ -101,8 +101,20 @@ Once installed, it runs transparently in the background:
 
 ## 📂 Specifications & Customization
 
-Detailed configurations, source code architectures, and prompt guides:
-* 📊 [Architecture](file:///home/venu/Documents/projects/ai/Nano-Guard/specs/architecture.md): System design and exit codes.
-* ⚙️ [Configuration](file:///home/venu/Documents/projects/ai/Nano-Guard/specs/configuration.md): IDE-specific hook integration.
-* 💻 [Interceptor Code](file:///home/venu/Documents/projects/ai/Nano-Guard/specs/interceptor.md): Source implementations.
-* 🧠 [Prompt Design](file:///home/venu/Documents/projects/ai/Nano-Guard/specs/prompting.md): Validation rules and LLM templates.
+Full build-ready specifications are in the [`specs/`](file:///home/venu/Documents/projects/ai/Nano-Guard/specs/) folder:
+
+| # | Document | What it covers |
+|:--|:--|:--|
+| 00 | [Overview & Feasibility](file:///home/venu/Documents/projects/ai/Nano-Guard/specs/00-overview-feasibility.md) | Feasibility analysis, design decisions |
+| 01 | [Project Structure](file:///home/venu/Documents/projects/ai/Nano-Guard/specs/01-project-structure.md) | Directory layout, file ownership |
+| 02 | [Architecture](file:///home/venu/Documents/projects/ai/Nano-Guard/specs/02-architecture.md) | Sequence flow, module boundaries, token budget |
+| 03 | [Config Schema](file:///home/venu/Documents/projects/ai/Nano-Guard/specs/03-config-schema.md) | `nano-guard.config.json` fields & defaults |
+| 04 | [stdin Contract](file:///home/venu/Documents/projects/ai/Nano-Guard/specs/04-stdin-contract.md) | IDE PostToolUse JSON payload schema |
+| 05 | [Context Extraction](file:///home/venu/Documents/projects/ai/Nano-Guard/specs/05-context-extraction.md) | Git diff strategy & fallback logic |
+| 06 | [Ollama API](file:///home/venu/Documents/projects/ai/Nano-Guard/specs/06-ollama-api.md) | HTTP request/response contract, error handling |
+| 07 | [Prompt Engineering](file:///home/venu/Documents/projects/ai/Nano-Guard/specs/07-prompt-engineering.md) | System prompt, few-shot examples, JSON schema |
+| 08 | [Exit Codes](file:///home/venu/Documents/projects/ai/Nano-Guard/specs/08-exit-codes.md) | Exit code contract, stderr format, fail-open rules |
+| 09 | [Init CLI](file:///home/venu/Documents/projects/ai/Nano-Guard/specs/09-init-cli.md) | `npx nano-guard init` bootstrapper spec |
+| 10 | [Testing Plan](file:///home/venu/Documents/projects/ai/Nano-Guard/specs/10-testing-plan.md) | Unit, integration, E2E, and CI strategy |
+| 11 | [Unit Test Code](file:///home/venu/Documents/projects/ai/Nano-Guard/specs/11-unit-tests.md) | Full runnable test source for every module |
+
