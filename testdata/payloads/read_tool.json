@@ -1,0 +1,12 @@
+{
+  "hook_event_name": "PostToolUse",
+  "session_id": "session-read-001",
+  "tool_name": "Read",
+  "tool_input": {
+    "AbsolutePath": "/home/user/project/src/server.go"
+  },
+  "tool_response": {
+    "success": true
+  },
+  "cwd": "/home/user/project"
+}

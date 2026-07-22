@@ -1,0 +1,15 @@
+{
+  "hook_event_name": "PostToolUse",
+  "session_id": "session-edit-001",
+  "tool_name": "replace_file_content",
+  "tool_input": {
+    "TargetFile": "/home/user/project/src/handler.go",
+    "TargetContent": "func old() {}",
+    "ReplacementContent": "func new() {}"
+  },
+  "tool_response": {
+    "filePath": "/home/user/project/src/handler.go",
+    "success": true
+  },
+  "cwd": "/home/user/project"
+}

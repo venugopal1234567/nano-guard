@@ -1,0 +1,14 @@
+{
+  "hook_event_name": "PostToolUse",
+  "session_id": "abc-123-def-456",
+  "tool_name": "write_to_file",
+  "tool_input": {
+    "TargetFile": "/home/user/project/src/server.go",
+    "CodeContent": "package main\n\nfunc main() {}"
+  },
+  "tool_response": {
+    "filePath": "/home/user/project/src/server.go",
+    "success": true
+  },
+  "cwd": "/home/user/project"
+}

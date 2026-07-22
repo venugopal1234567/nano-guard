@@ -51,8 +51,8 @@ func tmpJSON(t *testing.T, v any) string {
 func TestDefaults(t *testing.T) {
 	cfg := defaults()
 
-	if cfg.Model != "qwen2.5-coder:3b" {
-		t.Errorf("Model: got %q, want %q", cfg.Model, "qwen2.5-coder:3b")
+	if cfg.Model != "qwen2.5-coder:7b" {
+		t.Errorf("Model: got %q, want %q", cfg.Model, "qwen2.5-coder:7b")
 	}
 	if cfg.OllamaHost != "http://localhost:11434" {
 		t.Errorf("OllamaHost: got %q", cfg.OllamaHost)
@@ -141,7 +141,7 @@ func TestApplyFile_PartialOverride(t *testing.T) {
 		t.Errorf("TimeoutSeconds: got %d, want 60", cfg.TimeoutSeconds)
 	}
 	// Untouched fields should still be defaults
-	if cfg.Model != "qwen2.5-coder:3b" {
+	if cfg.Model != "qwen2.5-coder:7b" {
 		t.Errorf("Model should be default, got %q", cfg.Model)
 	}
 }
@@ -311,7 +311,7 @@ func TestLoadFrom_MalformedProject(t *testing.T) {
 func TestLoadFrom_FullSpecExample(t *testing.T) {
 	// Matches the exact example from spec 03-config-schema.md
 	project := tmpJSON(t, map[string]any{
-		"model":           "qwen2.5-coder:3b",
+		"model":           "qwen2.5-coder:7b",
 		"ollama_host":     "http://localhost:11434",
 		"timeout_seconds": 30,
 		"max_diff_lines":  200,
