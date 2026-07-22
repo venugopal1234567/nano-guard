@@ -1,6 +1,6 @@
 # Nano-Guard 🛡️
 
-Nano-Guard is an autonomous, lightweight **Post-Tool-Use** code verification hook designed for agentic IDEs (like Claude Code and Google Antigravity). Powered by small local LLMs running via Ollama, it intercepts edits, evaluates quality, and pipes feedback to correct code.
+Nano-Guard is an autonomous, lightweight **Post-Tool-Use** code verification hook designed for agentic IDEs (**Google Antigravity 2.0** and **Claude Code**). Powered by small local LLMs running via Ollama, it intercepts edits, evaluates quality, and pipes feedback to correct code.
 
 ### 💰 Why Nano-Guard? (Token & Cost Optimization)
 * **Zero-Cost Gatekeeping**: Code reviews run on your local CPU/GPU via Ollama, saving expensive cloud model API tokens.
@@ -13,14 +13,17 @@ Nano-Guard is an autonomous, lightweight **Post-Tool-Use** code verification hoo
 
 ## ⚡ Quick Start (One-Step Setup)
 
-To install Nano-Guard and automatically configure it for your local workspace, run:
+To install Nano-Guard and automatically configure it for **Google Antigravity 2.0** or **Claude Code**, run inside your project directory:
 
 ```bash
-# Install and run auto-setup
-npx nano-guard@latest init
+# Register init CLI locally (until published on npm)
+cd /path/to/Nano-Guard/init && npm link
+
+# Run init inside any project workspace
+npx nano-guard init
 ```
 
-*This command automatically pulls the recommended local model (`qwen2.5-coder:7b`), builds the script, and writes the `.claude/settings.json` hook block for your current project.*
+*This command automatically pulls the recommended local model (`qwen2.5-coder:7b`), builds the Go binary to `~/.local/bin/nano-guard`, and writes both `.claude/settings.json` (for Claude Code) and `.agents/AGENTS.md` (for Antigravity 2.0).*
 
 ---
 
@@ -116,6 +119,113 @@ Once installed, it runs transparently in the background:
 
 ---
 
+## 🧪 How to Test Nano-Guard
+
+### 1. Unit Tests (Go & TypeScript)
+Nano-Guard includes unit test suites for all internal components (stdin payload parsing, Ollama HTTP communication, code evaluation formatting, git diff extraction, and init CLI generators):
+
+```bash
+# Run all Go unit tests
+go test ./...
+
+# Generate Go unit test coverage report
+go test ./... -coverprofile=coverage.out
+go tool cover -func=coverage.out
+
+# Run TypeScript init package tests
+cd init && npm test
+```
+
+### 2. Live Integration Tests (Requires local Ollama)
+Run full end-to-end integration tests that compile the Go binary and verify evaluation results against a live local Ollama model (`qwen2.5-coder:7b` or `3b`):
+
+```bash
+# 1. Ensure Ollama is running and has model pulled
+ollama pull qwen2.5-coder:7b
+
+# 2. Run live integration test suite
+go test ./e2e/... -tags integration -timeout 120s
+```
+
+---
+
+## 🪐 How to Integrate with Google Antigravity 2.0
+
+Nano-Guard fully supports **Google Antigravity 2.0** through Workspace Rules (`.agents/AGENTS.md`) and command-line execution.
+
+### Step 1: Install Binary
+Build the Go binary and place it in your local binary path:
+```bash
+mkdir -p ~/.local/bin
+go build -o ~/.local/bin/nano-guard ./cmd/nano-guard
+```
+
+### Step 2: Configure Workspace Rule in Antigravity 2.0
+In your target project directory, create or update `.agents/AGENTS.md`:
+
+```markdown
+## Nano-Guard Post-Tool-Use Verification
+After executing any file modification tool (write_to_file, replace_file_content, multi_replace_file_content), you MUST verify the code change by running this terminal command:
+```bash
+echo '{"hook_event_name":"PostToolUse","tool_name":"replace_file_content","tool_input":{"TargetFile":"<edited_file_path>"},"cwd":"/path/to/your/project"}' | ~/.local/bin/nano-guard
+```
+If the command outputs errors (Exit Code 2), you MUST fix the reported issues immediately.
+```
+
+### Step 3: Test in Antigravity 2.0
+1. Ensure Ollama service is active (`ollama serve`).
+2. Ask Antigravity to make an edit (e.g. *"Add a debug logger to main.go without handling errors"*).
+3. Antigravity will apply the edit, execute `nano-guard` via terminal, catch the error report from `stderr`, and automatically self-correct the code!
+
+---
+
+## 🚀 How to Use Nano-Guard on Any New Project
+
+Setting up Nano-Guard on any new project takes less than 30 seconds.
+
+### Option A: One-Step Automatic Setup (Recommended)
+
+1. Register the local `nano-guard` package once on your machine:
+   ```bash
+   cd /path/to/Nano-Guard/init && npm run build && npm link
+   ```
+
+2. Inside **any new or existing project workspace**, run:
+   ```bash
+   npx nano-guard init
+   ```
+
+   **What `npx nano-guard init` does automatically**:
+   * Checks for local **Ollama** installation.
+   * Pulls the recommended local LLM (`qwen2.5-coder:7b`).
+   * Compiles & installs `~/.local/bin/nano-guard`.
+   * Generates a default `nano-guard.config.json` config.
+   * Configures `.claude/settings.json` (for Claude Code CLI).
+   * Configures `.agents/AGENTS.md` (for Google Antigravity 2.0).
+
+---
+
+### Option B: Manual Setup for New Projects
+
+1. Build & place `nano-guard` in your `$PATH`:
+   ```bash
+   go build -o ~/.local/bin/nano-guard ./cmd/nano-guard
+   ```
+
+2. In your new project root, create `.agents/AGENTS.md` (for Antigravity 2.0) and `.claude/settings.json` (for Claude Code).
+
+3. *(Optional)* Create a `nano-guard.config.json` to customize rules or ignored path globs:
+   ```json
+   {
+     "model": "qwen2.5-coder:7b",
+     "ollama_host": "http://localhost:11434",
+     "timeout_seconds": 30,
+     "ignore_paths": ["**/*.md", "**/dist/**", "**/vendor/**"]
+   }
+   ```
+
+---
+
 ## 📂 Specifications & Customization
 
 Full build-ready specifications are in the [`specs/`](file:///home/venu/Documents/projects/ai/Nano-Guard/specs/) folder:
@@ -134,4 +244,5 @@ Full build-ready specifications are in the [`specs/`](file:///home/venu/Document
 | 09 | [Init CLI](file:///home/venu/Documents/projects/ai/Nano-Guard/specs/09-init-cli.md) | `npx nano-guard init` bootstrapper spec |
 | 10 | [Testing Plan](file:///home/venu/Documents/projects/ai/Nano-Guard/specs/10-testing-plan.md) | Unit, integration, E2E, and CI strategy |
 | 11 | [Unit Test Code](file:///home/venu/Documents/projects/ai/Nano-Guard/specs/11-unit-tests.md) | Full runnable test source for every module |
+
 
