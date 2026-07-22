@@ -20,9 +20,26 @@ To install Nano-Guard and automatically configure it for your local workspace, r
 npx nano-guard@latest init
 ```
 
-*This command automatically pulls the recommended local model (`qwen2.5-coder:3b`), builds the script, and writes the `.claude/settings.json` hook block for your current project.*
+*This command automatically pulls the recommended local model (`qwen2.5-coder:7b`), builds the script, and writes the `.claude/settings.json` hook block for your current project.*
 
 ---
+
+## 🔨 Manual Build & Verification
+
+If you prefer building from source manually:
+
+```bash
+# 1. Navigate to project root
+cd /home/venu/Documents/projects/ai/Nano-Guard
+
+# 2. Build the binary directly to ~/.local/bin/nano-guard
+mkdir -p ~/.local/bin
+go build -o ~/.local/bin/nano-guard ./cmd/nano-guard
+
+# 3. Verify installation and version
+~/.local/bin/nano-guard --version
+# Output: nano-guard v0.1.0
+```
 
 ## 💡 Usage Examples
 

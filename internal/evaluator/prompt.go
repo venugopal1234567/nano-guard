@@ -33,7 +33,7 @@ JSON schema:
   "summary": string
 }
 
-Rules — set approved=false ONLY if any rule below is violated:`
+Rules — if any rule below is violated, set approved=false AND put the violation string in the errors array:`
 
 // promptSuffix is the fixed footer appended after the active rule lines.
 const promptSuffix = `

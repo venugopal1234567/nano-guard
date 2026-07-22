@@ -8,7 +8,7 @@ JSON schema:
   "summary": string
 }
 
-Rules — set approved=false ONLY if any rule below is violated:
+Rules — if any rule below is violated, set approved=false AND put the violation string in the errors array:
 1. UNHANDLED_ERROR: function returns error/promise but caller ignores it
 2. DEBUG_LOG: console.log / fmt.Println / print() left in code
 3. TYPE_UNSAFE: use of `any`, unsafe casts, or missing types on public API
