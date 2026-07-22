@@ -1,0 +1,13 @@
+diff --git a/src/server.go b/src/server.go
+index abc1234..def5678 100644
+--- a/src/server.go
++++ b/src/server.go
+@@ -10,7 +10,7 @@ import (
+ )
+
+ func handleRequest(w http.ResponseWriter, r *http.Request) {
+-	// todo: implement
+-	fmt.Println("debug: request received")
++	w.WriteHeader(http.StatusOK)
++	w.Write([]byte("OK"))
+ }

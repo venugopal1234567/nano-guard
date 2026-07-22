@@ -1,0 +1,8 @@
+{
+  "model": "qwen2.5-coder:7b",
+  "created_at": "2026-01-01T00:00:00Z",
+  "response": "{\"approved\":true,\"errors\":[],\"warnings\":[],\"summary\":\"Added TypeScript types and error handling to getUser function.\"}",
+  "done": true,
+  "total_duration": 1234567890,
+  "eval_count": 42
+}

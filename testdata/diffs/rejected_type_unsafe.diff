@@ -1,0 +1,10 @@
+diff --git a/src/api/handler.ts b/src/api/handler.ts
+index 555eeee..666ffff 100644
+--- a/src/api/handler.ts
++++ b/src/api/handler.ts
+@@ -3,5 +3,8 @@ import { Request, Response } from "express"
++export function handleData(req: Request, res: Response) {
++	const data = req.body as any
++	const userId = (data as any).userId
++	res.json({ ok: true })
++}

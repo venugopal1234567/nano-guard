@@ -1,0 +1,14 @@
+diff --git a/internal/db/query.go b/internal/db/query.go
+index 111aaaa..222bbbb 100644
+--- a/internal/db/query.go
++++ b/internal/db/query.go
+@@ -5,6 +5,10 @@ import "database/sql"
+
+ func GetUser(db *sql.DB, id int) (*User, error) {
++	row, err := db.QueryRow("SELECT * FROM users WHERE id = ?", id)
++	if err != nil {
++		// error silently ignored
++		_ = err
++	}
++	return scanUser(row), nil
+ }
